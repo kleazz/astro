@@ -1,33 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import '../../../App.css';
+// src/layout/components/IntroVideo.js
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../style/intro.css';
+import video from '../../sources/videos/introVideo.mp4';
+import audio from '../../sources/audio/landing_ambient.mp3';
 
 const IntroVideo = () => {
-  const [hasInteracted, setHasInteracted] = useState(false);
-
-  const handleInteraction = () => {
-    setHasInteracted(true);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (hasInteracted) {
-      const video = document.getElementById('intro-video');
-      const audio = document.getElementById('intro-audio');
+    const videoElement = document.getElementById('intro-video');
+    const audioElement = document.getElementById('intro-audio');
 
-      if (video && audio) {
-        video.play();
-        audio.play();
-      }
+    if (videoElement && audioElement) {
+      videoElement.play();
+      audioElement.play();
     }
-  }, [hasInteracted]);
+
+    const handleVideoEnded = () => {
+      navigate('/home');
+    };
+
+    videoElement.addEventListener('ended', handleVideoEnded);
+
+    return () => {
+      videoElement.removeEventListener('ended', handleVideoEnded);
+    };
+  }, [navigate]);
 
   return (
-    <div onClick={handleInteraction}>
-      <video id="intro-video" width="600" height="400" controls>
-        <source src="my-app\src\sources\videos\HeroVideo-Video-2-noAudio-Final.mp4" type="video/mp4" />
+    <div id="container-intro">
+      <video id="intro-video" autoPlay muted>
+        <source src={video} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <audio id="intro-audio" controls>
-        <source src="my-app\src\sources\audio\landing_ambient.mp3" type="audio/mp3" />
+      <audio id="intro-audio" autoPlay>
+        <source src={audio} type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
     </div>
