@@ -1,12 +1,13 @@
 import React from 'react';
 import '../style/home.css';
+import homevideo from '../../sources/videos/homevideo.mp4'
 
 const Home = () => {
   return (
     <body>
     <div className="video-container">
-        <video autoplay loop muted>
-            <source src="planet_rotation.mp4" type="video/mp4"/>
+        <video autoPlay loop muted>
+            <source src={homevideo} type="video/mp4"/>
             Your browser does not support the video tag.
         </video>
         <div className="content">
