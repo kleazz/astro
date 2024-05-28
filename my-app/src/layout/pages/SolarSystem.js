@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import '../style/solarsystem.css';
 import sun from '../../sources/images/planets/sun.png';
-import PlanetFact from '../components/PlanetFact';
+// import PlanetFact from '../components/PlanetFact';
 
 const SolarSystem = () => {
   useEffect(() => {

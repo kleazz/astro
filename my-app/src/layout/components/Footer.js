@@ -7,6 +7,9 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-left">
           <p>&copy; 2023 AstroVision. All Rights Reserved.</p>
+          <ul>
+            <li>Follow the stars</li>
+          </ul>
         </div>
         <div className="footer-center">
           <ul className="footer-links">
