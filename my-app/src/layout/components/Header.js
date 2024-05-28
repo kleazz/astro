@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <header>
             <div className="container">
-                <h1>AstroVision</h1>
+            <h1>Astro<span style={{ color: '#6200ea' }}>Vision</span></h1>
                 <nav>
                     <ul>
                         <li><a href="#home">Home</a></li>

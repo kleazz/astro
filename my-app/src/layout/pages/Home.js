@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Typed from 'typed.js';
 import '../style/home.css';
 import homevideo from '../../sources/videos/homevideo.mp4';
+import buttonClickSound from '../../sources/audio/roughclick.wav'; // Moved import here
 
 const Home = () => {
   const visionRef = useRef(null); // Ref for the element where typing effect will be applied
@@ -22,7 +23,6 @@ const Home = () => {
 
     // Custom function
     const stayLonger = () => {
-
       setTimeout(() => {
         typed.start(); // Restart typing after a delay
       }, 5000); // Change delay time as needed
@@ -34,6 +34,11 @@ const Home = () => {
     };
   }, []);
 
+  const playButtonClickSound = () => {
+    const audio = new Audio(buttonClickSound);
+    audio.play();
+  };
+
   return (
     <div className="video-container">
       <video autoPlay loop muted>
@@ -43,7 +48,7 @@ const Home = () => {
       <div className="content">
         <h1>Welcome to Astro<span ref={visionRef}></span></h1>
         <p>Explore the wonders of the cosmos</p>
-        <button onClick={() => { window.location.href = 'explore.html'; }}>Explore Now</button>
+        <button onClick={() => { playButtonClickSound();}}>Explore Now</button>
       </div>
     </div>
   );
