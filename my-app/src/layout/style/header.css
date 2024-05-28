@@ -1,9 +1,9 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-start; /* Adjusted property */
   width: 80%;
-  margin: 0 auto;
+  margin-left: 50px;
   max-width: 1200px;
 }
 
