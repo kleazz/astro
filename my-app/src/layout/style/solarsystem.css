@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    background-color: black;
-    /* overflow: hidden; */
+    background-color: #05090e;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
     /* height: 70cm; */
   }
   
@@ -10,6 +10,7 @@ body {
     height: 30cm;
     width: auto;
     position: relative; 
+    overflow: hidden;
   }
   
   .solar-system-container img {
@@ -21,15 +22,15 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 15em;
-    left: 15em;
+    top: 23.5%;
+    left: 50%;
     width: 10em;
     height: 10em;
     border-radius: 50%;
     box-shadow: 0 0 3em rgb(255, 128, 0);
     animation: orbit 50s linear infinite;
-    margin-top: 11%;
-    margin-left: 42%;
+    /* margin-top: 11%;
+    margin-left: 50%; */
   }
   
   .mercury,
@@ -46,8 +47,8 @@ body {
     border-color: white transparent transparent transparent;
     border-width: 0.1em 0.1em 0 0;
     border-radius: 50%;
-    margin-top: 11%;
-    margin-left: 42%;
+    margin-top: 10.5%;
+    margin-left: 43%;
   }
 
   .moon{
@@ -257,4 +258,99 @@ body {
       transform: rotate(360deg);
     }
   }
+
+  .info-box {
+    padding: 20px;
+    margin: 20px;
+    color: #fff;
+    opacity: 0; /* Initially hide the boxes */
+   /* Animation for appearance */
+  }
+  
+  /* Define keyframes for the animation */
+  @keyframes appearAnimation {
+    from {
+      transform: translate(-100%, -100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes appearAnimationBottomLeft {
+    from {
+      transform: translate(-100%, 100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes appearAnimationTopRight {
+    from {
+      transform: translate(100%, -100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes appearAnimationBottomRight {
+    from {
+      transform: translate(100%, 100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+  .info-text {
+    margin: 40px;
+    /* color:  */
+  }
+  
+  .top-left {
+    position: absolute;
+    top: 20;
+    margin-top: 70px;
+    left: 0;
+    background-color: white;
+    color: black;
+    animation: appearAnimation 1s forwards;
+  }
+  
+  .bottom-left {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 70px;
+    left: 0;
+    background-color: #05090e; /* Changed to match the desired color */
+    animation: appearAnimationBottomLeft 1s forwards;
+  }
+  
+  .top-right {
+    position: absolute;
+    margin-top: 70px;
+    top: 30;
+    right: 0;
+    animation: appearAnimationTopRight 1s forwards;
+  }
+  
+  .bottom-right {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 70px;
+    right: 0;
+    background-color: #6200ea;
+    /* animation-delay: 0.3s; Delay animation for bottom-right box */
+    animation: appearAnimationBottomRight 1s forwards;
+  }
+
   
