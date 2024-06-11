@@ -7,7 +7,7 @@ body {
   
   .solar-system-container {
     font-size: 7px;
-    height: 30cm;
+    height: 47cm;
     width: auto;
     position: relative; 
     overflow: hidden;
@@ -251,6 +251,7 @@ body {
     background-color: white;
     border-radius: 50%;
     z-index: -1;
+    pointer-events: none;
   }
   
   @keyframes orbit {
@@ -352,5 +353,16 @@ body {
     /* animation-delay: 0.3s; Delay animation for bottom-right box */
     animation: appearAnimationBottomRight 1s forwards;
   }
+
+  .carousel-container {
+    position: absolute;
+    top: 20cm;
+    bottom: 20px; /* Adjust as needed */
+    left: 23%;
+    transform: translateX(-50%);
+    width: 100%; /* Adjust the width of the carousel */
+    max-width: 600px; /* Max width of the carousel */
+    z-index: 10; /* Above other elements */
+      }
 
   
