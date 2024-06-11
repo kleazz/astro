@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System</title>
+    <link rel="stylesheet" href="../style/solar.css">
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/footer.css">
+</head>
+<header>
+    <div class="container">
+        <div class="nav-buttons">
+            <h3>Astro<span style="color: #6200ea;">Vision</span></h3>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="auth-buttons">
+            <button class="login-button" onclick="playButtonClickSound()">Log in</button>
+            <button class="signup-button" onclick="playButtonClickSound()">Sign Up</button>
+        </div>
+    </div>
+</header>
+<body>
+    <div class="info-box top-left">
+        <h3>Left Top</h3>
+        <p>This is a box on the top-left side.</p>
+    </div>
+    <div class="info-text bottom-left">
+        <p>This is just text on the bottom-left side.</p>
+    </div>
+    <div class="info-text top-right">
+        <p>This is just text on the top-right side.</p>
+    </div>
+    <div class="info-box bottom-right">
+        <h3>Right Bottom</h3>
+        <p>This is a box on the bottom-right side.</p>
+    </div>
+    <div class="solar-system-container planets">
+        <div class="sun" >
+            <img src="../sources/images/planets/sun.png" alt="sun">
+        </div>
+        <div class="mercury planet"></div>
+        <div class="venus planet" ></div>
+        <div class="earth planet">
+            <div class="moon"></div>
+        </div>
+        <div class="mars planet"></div>
+        <div class="jupiter planet"></div>
+        <div class="saturn planet"></div>
+        <div class="uranus planet"></div>
+        <div class="neptune planet"></div>
+        <div class="pluto planet"></div>
+
+
+        <div class="slider-container">
+            <div class="slider" id="slider1">
+            <div class="slide active" >
+                <div>
+                    <h3>Earth</h3>
+                    <p>Paragraph for slide 1</p>
+                </div>
+                <img src="../sources/images/planets/earth.png" alt="Slide 1">
+            </div>
+            
+            <div class="slide">
+                <div>
+                    <h3>Jupiter</h3>
+                    <p>Paragraph for slide 2</p>
+                </div>
+                <img src="../sources/images/planets/jupiter.png" alt="Slide 2">
+            </div>  
+            
+            <div class="slide">
+                <div>
+                    <h3>Mars</h3>
+                    <p>Paragraph for slide 3</p>
+                </div>
+                <img src="../sources/images/planets/mars.png" alt="Slide 3">
+            </div>
+
+            <div class="slide">
+                <div>
+                    <h3>Mercury</h3>
+                    <p>Paragraph for slide 4</p>
+                </div>
+                <img src="../sources/images/planets/mercury.png" alt="Slide 3">
+            </div>
+
+            <button class="prev" onclick="prevSlide('slider1')">&#10094;</button>
+    <button class="next" onclick="nextSlide('slider1')">&#10095;</button>
+        </div>
+
+<div class="slider" id="slider2">
+    <div class="slide active">
+        <div>
+            <h3>Moon</h3>
+            <p>Paragraph for slide 1</p>
+        </div>
+        <img src="../sources/images/planets/moon.png" alt="Slide 1">
+    </div>
+    
+    <div class="slide">
+        <div>
+            <h3>Neptune</h3>
+            <p>Paragraph for slide 2</p>
+        </div>
+        <img src="../sources/images/planets/neptune.png" alt="Slide 2">
+    </div>
+    
+    <div class="slide">
+        <div>
+            <h3>Pluto</h3>
+            <p>Paragraph for slide 3</p>
+        </div>
+        <img src="../sources/images/planets/pluto.png" alt="Slide 3">
+    </div>
+    
+    <div class="slide">
+        <div>
+            <h3>Saturn</h3>
+            <p>Paragraph for slide 4</p>
+        </div>
+        <img src="../sources/images/planets/saturn.png" alt="Slide 4">
+        
+    </div>
+    
+    <button class="prev" onclick="prevSlide('slider1')">&#10094;</button>
+    <button class="next" onclick="nextSlide('slider1')">&#10095;</button>
+</div>
+
+<div class="slider" id="slider3">
+    <div class="slide active" >
+        <div>
+            <h3>Sun</h3>
+            <p>Paragraph for slide 1</p>
+        </div>
+        <img src="../sources/images/planets/sun.png" alt="Slide 1">
+    </div>
+    
+    <div class="slide">
+        <div>
+            <h3>Uranus</h3>
+            <p>Paragraph for slide 2</p>
+        </div>
+        <img src="../sources/images/planets/uranus.png" alt="Slide 2">
+    </div>
+    
+    <div class="slide" id="venus-section">
+        <div>
+            <h3>Venus</h3>
+            <p>Paragraph for slide 3</p>
+        </div>
+        <img src="../sources/images/planets/venus.png" alt="Slide 3">
+    </div>
+
+            <button class="prev" onclick="prevSlide('slider1')">&#10094;</button>
+    <button class="next" onclick="nextSlide('slider1')">&#10095;</button>
+</div>
+</div>
+</div>
+        
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+        });
+
+        function createStars() {
+            const container = document.querySelector(".solar-system-container");
+            for (let i = 0; i < 750; i++) {
+                const star = document.createElement("div");
+                star.className = "star";
+                star.style.width = ".1px";
+                star.style.height = ".1px";
+                star.style.top = Math.random() * 100 + "%";
+                star.style.left = Math.random() * 100 + "%";
+                container.appendChild(star);
+            }
+        }
+
+        const sliders = document.querySelectorAll('.slider');
+
+sliders.forEach(slider => {
+    const slides = slider.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    const slideInterval = setInterval(nextSlide, 5000);
+});
+
+function showSlide(sliderId, index) {
+        const slides = document.querySelectorAll(`#${sliderId} .slide`);
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+
+        document.querySelector(`#${sliderId}`).setAttribute('data-index', index);
+    }
+
+    function nextSlide(sliderId) {
+        const slider = document.getElementById(sliderId);
+        let index = parseInt(slider.getAttribute('data-index') || '0');
+        showSlide(sliderId, index + 1);
+    }
+
+    function prevSlide(sliderId) {
+        const slider = document.getElementById(sliderId);
+        let index = parseInt(slider.getAttribute('data-index') || '0');
+        showSlide(sliderId, index - 1);
+    }
+
+    // Initialize sliders
+    document.querySelectorAll('.slider').forEach(slider => {
+        slider.setAttribute('data-index', '0');
+        showSlide(slider.id, 0);
+    });
+</script>
+</body>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <p>&copy; 2023 AstroVision. All Rights Reserved.</p>
+            <ul>
+                <li>Follow the stars</li>
+            </ul>
+        </div>
+        <div class="footer-center">
+            <ul class="footer-links">
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#privacy">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-right">
+            <ul class="social-media">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</html>

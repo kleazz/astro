@@ -1,13 +1,13 @@
 body {
     margin: 0;
     background-color: #05090e;
-    overflow-x: hidden; /* Hide horizontal scrollbar */
-    /* height: 70cm; */
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
   }
   
   .solar-system-container {
     font-size: 7px;
-    height: 47cm;
+    height: 50cm;
     width: auto;
     position: relative; 
     overflow: hidden;
@@ -161,7 +161,7 @@ body {
     right: 0.8em;
     width: 2em;
     height: 2em;
-    background-image: url('../../sources/images/planets/mercury.png');
+    background-image: url('../sources/images/planets/mercury.png');
     background-size: cover;
   }
   
@@ -170,7 +170,7 @@ body {
     right: 2em;
     width: 2em;
     height: 2em;
-    background-image: url('../../sources/images/planets/venus.png');
+    background-image: url('../sources/images/planets/venus.png');
     background-size: cover;
   }
   
@@ -179,7 +179,7 @@ body {
     right: 0em;
     width: 5em;
     height: 5em;
-    background-image: url('../../sources/images/planets/earth.png');
+    background-image: url('../sources/images/planets/earth.png');
     background-size: cover;
   }
   
@@ -188,7 +188,7 @@ body {
     right: 0.2em;
     width: 1.2em;
     height: 1.2em;
-    background-image: url('../../sources/images/planets/moon.png');
+    background-image: url('../sources/images/planets/moon.png');
     background-size: cover;
   }
   
@@ -197,7 +197,7 @@ body {
     right: 3em;
     width: 3em;
     height: 3em;
-    background-image: url('../../sources/images/planets/mars.png');
+    background-image: url('../sources/images/planets/mars.png');
     background-size: cover;
   }
   
@@ -206,7 +206,7 @@ body {
     right: 3em;
     width: 5em;
     height: 5em;
-    background-image: url('../../sources/images/planets/jupiter.png');
+    background-image: url('../sources/images/planets/jupiter.png');
     background-size: cover;
   }
   
@@ -215,7 +215,7 @@ body {
     right: 5em;
     width: 4.5em;
     height: 4.5em;
-    background-image: url('../../sources/images/planets/saturn.png');
+    background-image: url('../sources/images/planets/saturn.png');
     background-size: cover;
   }
   
@@ -224,7 +224,7 @@ body {
     right: 6.5em;
     width: 4em;
     height: 4em;
-    background-image: url('../../sources/images/planets/uranus.png');
+    background-image: url('../sources/images/planets/uranus.png');
     background-size: cover;
   }
   
@@ -233,7 +233,7 @@ body {
     right: 8em;
     width: 4em;
     height: 4em;
-    background-image: url('../../sources/images/planets/neptune.png');
+    background-image: url('../sources/images/planets/neptune.png');
     background-size: cover;
   }
   
@@ -242,7 +242,7 @@ body {
     right: 10em;
     width: 4em;
     height: 4em;
-    background-image: url('../../sources/images/planets/pluto.png');
+    background-image: url('../sources/images/planets/pluto.png');
     background-size: cover;
   }
   
@@ -251,7 +251,6 @@ body {
     background-color: white;
     border-radius: 50%;
     z-index: -1;
-    pointer-events: none;
   }
   
   @keyframes orbit {
@@ -264,8 +263,7 @@ body {
     padding: 20px;
     margin: 20px;
     color: #fff;
-    opacity: 0; /* Initially hide the boxes */
-   /* Animation for appearance */
+    opacity: 0;
   }
   
   /* Define keyframes for the animation */
@@ -325,6 +323,7 @@ body {
     background-color: white;
     color: black;
     animation: appearAnimation 1s forwards;
+    border-radius: 10px; 
   }
   
   .bottom-left {
@@ -332,7 +331,7 @@ body {
     bottom: 0;
     margin-bottom: 70px;
     left: 0;
-    background-color: #05090e; /* Changed to match the desired color */
+    color: white; 
     animation: appearAnimationBottomLeft 1s forwards;
   }
   
@@ -341,6 +340,7 @@ body {
     margin-top: 70px;
     top: 30;
     right: 0;
+    color: white;
     animation: appearAnimationTopRight 1s forwards;
   }
   
@@ -350,19 +350,84 @@ body {
     margin-bottom: 70px;
     right: 0;
     background-color: #6200ea;
-    /* animation-delay: 0.3s; Delay animation for bottom-right box */
+    border-radius: 10px;
     animation: appearAnimationBottomRight 1s forwards;
   }
+  .slider-container {
+    margin-top: 620px;
 
-  .carousel-container {
+}
+
+.slider {
+    background-color: #e9e8e4;
+    width: 90%;
+    margin-left: 5%;
+    height: 350px; 
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.slide {
     position: absolute;
-    top: 20cm;
-    bottom: 20px; /* Adjust as needed */
-    left: 23%;
-    transform: translateX(-50%);
-    width: 100%; /* Adjust the width of the carousel */
-    max-width: 600px; /* Max width of the carousel */
-    z-index: 10; /* Above other elements */
-      }
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; 
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    box-sizing: border-box;
+    text-align: left;
+}
 
-  
+.slide.active {
+    display: flex; 
+}
+
+.slide h3 {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.slide p {
+    font-size: 16px;
+}
+
+.slide img {
+    width: 45%; 
+    height: auto; 
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  height: 380px;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  user-select: none;
+  color: #e9e8e4;
+
+}
+
+.next {
+  right: 0;
+}
+
+.prev {
+  left: 0;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
