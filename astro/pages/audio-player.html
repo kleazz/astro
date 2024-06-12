@@ -7,16 +7,4 @@
 <body>
     <audio id="intro-audio" src="../sources/audio/landing_ambient.mp3" autoplay loop></audio>
 </body>
-<script>
-    window.addEventListener('message', function(event) {
-    if (event.origin !== window.location.origin) return; // Ensure the message is from the same origin
-
-    if (event.data === 'toggleVolume') {
-        const audioElement = document.getElementById('audio-element');
-        if (!audioElement) return;
-
-        audioElement.muted = !audioElement.muted;
-    }
-});
-</script>
 </html>

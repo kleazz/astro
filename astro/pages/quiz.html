@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/footer.css">
     <link rel="stylesheet" href="../style/quiz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.10/pixi.min.js"></script>
 </head>
 <body>
@@ -24,12 +25,26 @@
                     </ul>
                 </nav>
             </div>
+            <div class="auth-buttons">
+                <button onclick="toggleSound()" id="soundIcon">
+                    <i class="bi bi-bell"></i>
+                </button>
+            </div>
         </div>
     </header>
     <div id="iframe-container">
         <iframe id="audio-iframe" src="audio-player.html" frameborder="0" style="display: none;"></iframe>
     </div>
     <script>
+        window.toggleSound = function () {
+                const soundIcon = document.getElementById('soundIcon').querySelector('i');
+
+                if (soundIcon.classList.contains('bi-bell')) {
+                    soundIcon.classList.replace('bi-bell', 'bi-bell-slash');
+                } else {
+                    soundIcon.classList.replace('bi-bell-slash', 'bi-bell');
+                }
+            }
         // Create a Pixi Application
         let app = new PIXI.Application({ width: 1000, height: 600, backgroundColor: 0x05090e});
 
@@ -39,6 +54,7 @@
         // Define the star texture
         let starTexture = PIXI.Texture.from('../sources/images/stars/star.png');
         let bigstarTexture = PIXI.Texture.from('../sources/images/stars/star1.png');
+        let shuttleTexture = PIXI.Texture.from('../sources/images/stars/shuttle.png');
 
         // Create stars in the background
         const NUM_STARS = 70; // Total number of stars, including big stars
@@ -84,6 +100,56 @@
             });
         });
 
+        // Create and configure the shuttle sprite
+// Create and configure the shuttle sprite
+let shuttle = new PIXI.Sprite(shuttleTexture);
+shuttle.anchor.set(0.5);
+shuttle.scale.set(0.05); // Make the shuttle smaller
+shuttle.rotation = Math.PI / 4; // Set initial rotation to 45 degrees (π/4 radians)
+app.stage.addChild(shuttle);
+
+// Set initial position of the shuttle at the lower left corner
+shuttle.position.set(0, app.renderer.height);
+
+// Variables for animating the shuttle diagonally
+let speed = 2; // Adjust speed as needed
+let shuttleVisible = false;
+let direction = 1; // 1 for left to right, -1 for right to left
+
+// Hide the shuttle initially
+shuttle.visible = false;
+
+// Function to reset and show the shuttle
+function showShuttle() {
+    shuttle.position.set(direction === 1 ? 0 : app.renderer.width, app.renderer.height);
+    shuttle.visible = true;
+    shuttle.rotation = direction === 1 ? Math.PI / 4 : -Math.PI / 4; // Adjust rotation based on direction
+    shuttleVisible = true;
+}
+
+// Function to hide the shuttle
+function hideShuttle() {
+    shuttle.visible = false;
+    shuttleVisible = false;
+}
+
+// Animation loop for the shuttle
+app.ticker.add(() => {
+    if (shuttleVisible) {
+        shuttle.position.x += speed * direction;
+        shuttle.position.y -= speed;
+
+        // Check if the shuttle has reached either end of the screen
+        if ((direction === 1 && shuttle.position.x > app.renderer.width) || (direction === -1 && shuttle.position.x < 0)) {
+            hideShuttle();
+            setTimeout(showShuttle, 7000); // Show the shuttle again after 7 seconds
+            direction *= -1; // Reverse the direction
+        }
+    }
+});
+
+// Show the shuttle initially and start the cycle
+showShuttle();
         // Define quiz questions and answers
         const questions = [
             {
@@ -145,12 +211,16 @@
 
         window.playCorrectClickSound = () => {
             const audio = new Audio('../sources/audio/cute-level-up.mp3');
-            audio.play();
+            if (!document.getElementById('soundIcon').querySelector('i').classList.contains('bi-bell-slash')) {
+                    audio.play();
+                }
         };
 
         window.playIncorrectClickSound = () => {
             const audio = new Audio('../sources/audio/incorrect.mp3');
-            audio.play();
+            if (!document.getElementById('soundIcon').querySelector('i').classList.contains('bi-bell-slash')) {
+                    audio.play();
+                }
         };
 
         let currentQuestionIndex = 0;
@@ -332,6 +402,7 @@ answerTexts.push(answerContainer); // make the answers go more below
             // Display the first question
             questionText.text = currentQuestion.question;
             displayAnswers();
+            showShuttle();
         }
 
         displayAnswers(); // Initial display of answers
