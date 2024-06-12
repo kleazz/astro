@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz with PixiJS</title>
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/footer.css">
+    <link rel="stylesheet" href="../style/quiz.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.10/pixi.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="nav-buttons">
+                <h3>Astro<span style="color: #6200ea;">Vision</span></h3>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="solar.html">Solar System</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="auth-buttons">
+                <button onclick="togglePopup()">
+                    <i class="bi bi-volume-up"></i>
+                </button>
+                <button onclick="toggleSound()" id="soundIcon">
+                    <i class="bi bi-bell"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <script>
+        // Create a Pixi Application
+        let app = new PIXI.Application({ width: 1000, height: 600, backgroundColor: 0x05090e});
+
+        // Append the Pixi Application to the HTML body
+        document.body.appendChild(app.view);
+
+        // Define the star texture
+        let starTexture = PIXI.Texture.from('../sources/images/stars/star.png');
+        let bigstarTexture = PIXI.Texture.from('../sources/images/stars/star1.png');
+
+        // Create stars in the background
+        const NUM_STARS = 70; // Total number of stars, including big stars
+        const NUM_BIG_STARS = 10; // Number of big stars
+
+        let stars = [];
+        let bigstars = [];
+
+        for (let i = 0; i < NUM_STARS; i++) {
+            let star;
+            if (i < NUM_BIG_STARS) {
+                // Create a big star
+                star = new PIXI.Sprite(bigstarTexture);
+                bigstars.push(star);
+            } else {
+                // Create a normal star
+                star = new PIXI.Sprite(starTexture);
+                stars.push(star);
+            }
+
+            star.anchor.set(0.5);
+            star.position.set(Math.random() * app.renderer.width, Math.random() * app.renderer.height);
+            star.scale.set(Math.random() * 0.5 + 0.5); // Random scale between 0.5 and 1
+            app.stage.addChild(star);
+        }
+
+        // Animate stars twinkling
+        app.ticker.add(() => {
+            stars.forEach((star) => {
+                const scaleDelta = 0.02; // Increase the scaling factor
+                const speedMultiplier = 0.01; // Increase the speed multiplier
+
+                star.scale.x += scaleDelta * Math.sin(app.ticker.lastTime * speedMultiplier); // Scale up and down horizontally
+                star.scale.y += scaleDelta * Math.sin(app.ticker.lastTime * speedMultiplier); // Scale up and down vertically
+            });
+
+            bigstars.forEach((bigstar) => {
+                const scaleDelta = 0.01; // Increase the scaling factor for big stars
+                const speedMultiplier = 0.0065; // Increase the speed multiplier
+
+                bigstar.scale.x += scaleDelta * Math.sin(app.ticker.lastTime * speedMultiplier); // Scale up and down horizontally
+                bigstar.scale.y += scaleDelta * Math.sin(app.ticker.lastTime * speedMultiplier); // Scale up and down vertically
+            });
+        });
+
+        // Define quiz questions and answers
+        const questions = [
+            {
+                question: "What is the largest planet in our solar system?",
+                options: ["Mars", "Venus", "Jupiter", "Saturn"],
+                correctAnswer: 2 // Jupiter
+            },
+            {
+                question: "What is the name of the closest star to Earth?",
+                options: ["Proxima Centauri", "Alpha Centauri", "Betelgeuse", "Sirius"],
+                correctAnswer: 0 // Proxima Centauri
+            },
+            {
+                question: "Which planet is known as the 'Red Planet'?",
+                options: ["Mars", "Venus", "Jupiter", "Mercury"],
+                correctAnswer: 0 // Mars
+            },
+            {
+                question: "What is the largest moon in the solar system?",
+                options: ["Titan", "Ganymede", "Europa", "Callisto"],
+                correctAnswer: 1 // Ganymede
+            },
+            {
+                question: "What is the name of the galaxy that contains our solar system?",
+                options: ["Andromeda", "Milky Way", "Triangulum", "Messier 87"],
+                correctAnswer: 1 // Milky Way
+            },
+            {
+                question: "Which planet has the most extensive ring system?",
+                options: ["Saturn", "Jupiter", "Uranus", "Neptune"],
+                correctAnswer: 0 // Saturn
+            },
+            {
+                question: "What is the name of the phenomenon where a massive star collapses under its own gravity?",
+                options: ["Supernova", "Black Hole", "Nebula", "White Dwarf"],
+                correctAnswer: 1 // Black Hole
+            },
+            {
+                question: "What is the study of celestial bodies beyond Earth's atmosphere called?",
+                options: ["Geology", "Meteorology", "Astronomy", "Astrology"],
+                correctAnswer: 2 // Astronomy
+            },
+            {
+                question: "What is the approximate age of the universe, according to current scientific estimates?",
+                options: ["4.5 billion years", "13.8 billion years", "10 million years", "20 billion years"],
+                correctAnswer: 1 // 13.8 billion years
+            },
+            {
+                question: "Which planet has the shortest day in the solar system?",
+                options: ["Jupiter", "Venus", "Mercury", "Mars"],
+                correctAnswer: 0 // Jupiter
+            },
+            {
+                question: "What is the name of the largest volcano in the solar system, located on Mars?",
+                options: ["Mount Everest", "Mount Olympus", "Mauna Loa", "Mount Vesuvius"],
+                correctAnswer: 1 // Mount Olympus
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let currentQuestion = questions[currentQuestionIndex];
+
+        // Display current question
+        let questionText = new PIXI.Text(currentQuestion.question, { fontFamily: 'Arial, sans-serif', fontSize: 24, fill: 0xffffff });
+        questionText.anchor.set(0.5);
+        questionText.position.set(app.renderer.width / 2, 250);
+        app.stage.addChild(questionText);
+
+        // Display answer choices
+        let answerTexts = []; // Store answer text objects
+
+        function displayAnswers() {
+            clearAnswers();
+            currentQuestion.options.forEach((option, index) => {
+                let answerContainer = new PIXI.Container();
+                let answerText = new PIXI.Text(option, { fontFamily: 'Arial, sans-serif', fontSize: 20, fill: 0xffffff });
+
+                // Fixed dimensions for the answer box
+                const answerBoxWidth = 200;
+                const answerBoxHeight = 50;
+
+                let answerBox = new PIXI.Graphics();
+                answerBox.lineStyle(2, 0xffffff);
+                answerBox.beginFill(0x000000, 0);
+                answerBox.drawRect(0, 0, answerBoxWidth, answerBoxHeight);
+                answerBox.endFill();
+
+                // Center the text inside the answer box
+                answerText.position.set((answerBoxWidth - answerText.width) / 2, (answerBoxHeight - answerText.height) / 2);
+                answerContainer.addChild(answerBox);
+                answerContainer.addChild(answerText);
+
+                answerContainer.interactive = true;
+                answerContainer.buttonMode = true;
+                answerContainer.on('pointerover', () => {
+                    answerBox.clear();
+                    answerBox.lineStyle(2, 0xFF69B4);
+                    answerBox.beginFill(0x000000, 0);
+                    answerBox.drawRect(0, 0, answerBoxWidth, answerBoxHeight);
+                    answerBox.endFill();
+                });
+                answerContainer.on('pointerout', () => {
+                    answerBox.clear();
+                    answerBox.lineStyle(2, 0xffffff);
+                    answerBox.beginFill(0x000000, 0);
+                    answerBox.drawRect(0, 0, answerBoxWidth, answerBoxHeight);
+                    answerBox.endFill();
+                });
+                answerContainer.on('pointerdown', () => {
+                    if (!answerContainer.clicked) {
+                        answerContainer.clicked = true;
+                        if (index === currentQuestion.correctAnswer) {
+                            showResultMessage("Correct!", true);
+                            if (currentQuestionIndex === questions.length) {
+                                showQuizCompleteMessage(); // Only call showQuizCompleteMessage
+// Only call showQuizCompleteMessage if it's the last question and the answer is correct
+                            }
+                        } else {
+                            showResultMessage("Incorrect. Try again!", false);
+                        }
+                    }
+                });
+
+                // Calculate positions to center the answers
+                const answersPerRow = 2;
+const row = Math.floor(index / answersPerRow);
+const col = index % answersPerRow;
+const totalRows = Math.ceil(currentQuestion.options.length / answersPerRow);
+
+const startY = 350; // Increase Starting Y position
+const spacingY = 70; // Vertical spacing between answers
+const totalHeight = totalRows * spacingY;
+const startYCentered = (app.renderer.height - totalHeight) / 2;
+
+const startX = app.renderer.width / 2 - answerBoxWidth - 20; // Adjust X position to center
+const spacingX = answerBoxWidth + 40; // Horizontal spacing between answers
+
+const answerPositionY = startYCentered + row * spacingY + 100; // Increase Y position or add an offset
+const answerPositionX = startX + col * spacingX;
+
+answerContainer.position.set(answerPositionX, answerPositionY);
+app.stage.addChild(answerContainer);
+answerTexts.push(answerContainer); // make the answers go more below
+
+            });
+        }
+
+        function clearAnswers() {
+            // Remove answer text objects and their listeners
+            answerTexts.forEach(answerText => {
+                answerText.removeAllListeners();
+                app.stage.removeChild(answerText);
+            });
+            answerTexts = []; // Reset answer text array
+        }
+
+        function showResultMessage(message, isCorrect) {
+            let resultText = new PIXI.Text(message, { fontFamily: 'Arial, sans-serif', fontSize: 32, fill: isCorrect ? 0xFF69B4 : 0xff0000, fontWeight: 'bold' });
+            resultText.anchor.set(0.5);
+            resultText.position.set(app.renderer.width / 2, 120);
+            app.stage.addChild(resultText);
+            // Add zoom effect
+            let scale = 1;
+            app.ticker.add(() => {
+                scale += 0.02;
+                resultText.scale.set(scale);
+                if (scale >= 2) {
+                    app.stage.removeChild(resultText);
+                }
+            });
+
+            if (isCorrect) {
+                setTimeout(() => {
+                    moveToNextQuestion(); // Call moveToNextQuestion only if the answer is correct, with a delay
+                }, 1000);  // Call moveToNextQuestion only if the answer is correct
+            }
+        }
+
+        function moveToNextQuestion() {
+            // Reset clicked property for each answer text object
+            answerTexts.forEach(answerText => {
+                answerText.clicked = false;
+                answerText.interactive = true; // Re-enable interactivity
+            });
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                currentQuestion = questions[currentQuestionIndex];
+                questionText.text = currentQuestion.question;
+                clearAnswers();
+                displayAnswers();
+            } else {
+                showQuizCompleteMessage();
+            }
+        }
+
+        function showQuizCompleteMessage() {
+            let quizCompleteText = new PIXI.Text("Quiz Complete!", { fontFamily: 'Arial, sans-serif', fontSize: 32, fill: 0xFF69B4, fontWeight: 'bold' });
+            quizCompleteText.anchor.set(0.5);
+            quizCompleteText.position.set(app.renderer.width / 2, app.renderer.height / 2);
+            setTimeout(() => {
+                app.stage.addChild(quizCompleteText);
+
+                // Remove all questions and options from the screen
+                clearAnswers();
+                app.stage.removeChild(questionText);
+
+                // Display restart button
+                let restartButton = new PIXI.Text("Restart", { fontFamily: 'Arial, sans-serif', fontSize: 24, fill: 0xffffff });
+                restartButton.anchor.set(0.5);
+                restartButton.position.set(app.renderer.width / 2, app.renderer.height / 2 + 100);
+                restartButton.interactive = true;
+                restartButton.buttonMode = true;
+                restartButton.on('pointerdown', () => {
+                    restartQuiz();
+                });
+                app.stage.addChild(restartButton);
+            }, 50);
+        }
+
+        function restartQuiz() {
+            // Reset quiz state
+            currentQuestionIndex = 0;
+            currentQuestion = questions[currentQuestionIndex];
+            
+            // Remove quiz complete message and restart button
+            app.stage.removeChildren();
+            app.stage.addChild(questionText);
+            
+            // Display stars
+            stars.forEach(star => app.stage.addChild(star));
+            bigstars.forEach(bigstar => app.stage.addChild(bigstar));
+            
+            // Display the first question
+            questionText.text = currentQuestion.question;
+            displayAnswers();
+        }
+
+        displayAnswers(); // Initial display of answers
+    </script>
+    <footer class="footer" style="margin-top: 1cm;">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2023 AstroVision. All Rights Reserved.</p>
+                <ul>
+                    <li>Follow the stars</li>
+                </ul>
+            </div>
+            <div class="footer-center">
+                <ul class="footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <ul class="social-media">
+                    <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                    <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                    <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                    <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
