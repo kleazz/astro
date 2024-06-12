@@ -80,3 +80,21 @@
   .signup-button:hover {
     background-color: #3700b3;
   }
+
+ 
+.auth-buttons {
+  position: absolute;
+  /* top: 20px; */
+  /* left: -20px; Adjust this as needed */
+  right: 200px;
+}
+
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
+  color: white;
+}

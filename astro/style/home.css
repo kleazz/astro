@@ -86,28 +86,3 @@ body {
 .main-content {
     display: none;
 }
-
-.popup {
-  position: fixed;
-  top: 50%;  /* Position at 50% from the top */
-  left: 50%; /* Position at 50% from the left */
-  transform: translate(-50%, -50%); /* Centering trick */
-  background-color: transparent;
-  border: 2px solid #272d37;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  z-index: 1000; 
-  display: none;
-}
-
-.popup.show {
-  display: block;
-}
-
-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  font-size: 24px;
-  color: white;
-}

@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="../style/intro.css">
 </head>
 <body>
+    <!-- <audio id="intro-audio" src="../sources/audio/landing_ambient.mp3" loop autoplay></audio> -->
+<div id="iframe-container">
+        <iframe id="audio-iframe intro-audio" src="audio-player.html" frameborder="0" style="display: none;"></iframe>
+    </div>
+
     <div id="intro-video-container" class="fullscreen-video-container">
         <video id="intro-video" autoplay muted playsinline>
             <source src="../sources/videos/introVideo.mp4" type="video/mp4">
@@ -21,9 +26,15 @@
                 window.location.href = 'home.html';
             });
 
+            // Play video and handle errors
             introVideo.play().catch(error => {
                 console.error('Video play failed:', error);
                 window.location.href = 'home.html';
+            });
+
+            // Handle audio play error
+            introAudio.addEventListener('error', (event) => {
+                console.error('Audio play error:', event);
             });
         });
     </script>

@@ -17,26 +17,29 @@
                     <h3>Astro<span style="color: #6200ea;">Vision</span></h3>
                     <nav>
                         <ul>
-                            <li><a href="#home">Home</a></li>
+                            <li><a href="">Home</a></li>
                             <li><a href="solar.html">Solar System</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="cardgame.html">Zodiac</a></li>
+                            <li><a href="quiz.html">Astro Quiz</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="auth-buttons">
-                    <button onclick="togglePopup()">
-                        <i class="bi bi-volume-up"></i>
-                    </button>
                     <button onclick="toggleSound()" id="soundIcon">
                         <i class="bi bi-bell"></i>
                     </button>
                 </div>
             </div>
         </header>
+<div id="iframe-container">
+    <iframe id="audio-iframe" src="audio-player.html" frameborder="0" style="display: none;"></iframe>
+</div>
+
+
 
         <div class="video-container">
-            <video autoplay loop muted>
+            <video id="home-video" autoplay loop muted>
                 <source src="../sources/videos/homevideo.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -44,124 +47,10 @@
                 <h1>Welcome to Astro<span id="vision"></span></h1>
                 <p>Explore the wonders of the cosmos</p>
                 <button id="exploreButton" onclick="playButtonClickSound()">Explore Now</button>
+                </div>
             </div>
-        </div>
-        <div class="popup" id="spaceshipPopup">
-            <audio id="spaceshipSound" src="../sources/audio/landing_ambient.mp3" loop></audio>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.0/pixi.min.js"></script>
-            <script type="module">
-                import { Application, Assets, Text, Graphics, Sprite, SCALE_MODES } from 'https://cdn.skypack.dev/pixi.js';
-        
-                (async () => {
-                    // Create a new application
-                    const app = new Application();
-        
-                    // Initialize the application
-                    await app.init({ antialias: true, background: '#a286e4', width: 600, height: 400 });
-        
-                    // Append the application canvas to the popup div
-                    document.getElementById('spaceshipPopup').appendChild(app.view);
-        
-                    const stageHeight = app.screen.height;
-                    const stageWidth = app.screen.width;
-        
-                    // Make sure stage covers the whole scene
-                    app.stage.hitArea = app.screen;
-        
-                    // Make the slider
-                    const sliderWidth = 320;
-                    const slider = new Graphics().beginFill(0x272d37).drawRect(0, 0, sliderWidth, 5).endFill();
-        
-                    slider.x = (stageWidth - sliderWidth) / 2;
-                    slider.y = stageHeight * 0.80;
-        
-                    // Draw the handle
-                    const handle = new Graphics().beginFill(0xffffff).drawCircle(0, 0, 8).endFill();
-        
-                    handle.y = slider.height / 2;
-                    handle.x = sliderWidth / 2; // Initialize at the center for 50% volume
-                    handle.interactive = true;
-                    handle.buttonMode = true;
-        
-                    handle.on('pointerdown', onDragStart)
-                        .on('pointerup', onDragEnd)
-                        .on('pointerupoutside', onDragEnd);
-        
-                    app.stage.addChild(slider);
-                    slider.addChild(handle);
-        
-                    // Load the spaceship texture
-                    const texture = await Assets.load('https://pixijs.com/assets/bunny.png');
-        
-                    // Add spaceship whose scale can be changed by user using slider
-                    const spaceship = app.stage.addChild(Sprite.from(texture));
-        
-                    spaceship.texture.baseTexture.scaleMode = SCALE_MODES.NEAREST;
-                    spaceship.scale.set(3);
-                    spaceship.anchor.set(0.5);
-                    spaceship.x = stageWidth / 2;
-                    spaceship.y = stageHeight / 2;
-        
-                    // Add title
-                    const title = new Text('Drag the handle to change the volume of sound.', {
-                        fill: '#272d37',
-                        fontFamily: 'Roboto',
-                        fontSize: 20,
-                        align: 'center',
-                    });
-        
-                    title.roundPixels = true;
-                    title.x = stageWidth / 2;
-                    title.y = 40;
-                    title.anchor.set(0.5, 0);
-                    app.stage.addChild(title);
-        
-                    // Get the audio element
-                    const spaceshipSound = document.getElementById('spaceshipSound');
-                    spaceshipSound.volume = 0.5;  // Set initial volume to 50%
-        
-                    // Listen to pointermove on stage once handle is pressed.
-                    function onDragStart() {
-                        // Play sound on first interaction
-                        if (spaceshipSound.paused) {
-                            spaceshipSound.play().catch((error) => {
-                                console.error('Audio playback failed:', error);
-                            });
-                        }
-        
-                        app.stage.interactive = true;
-                        app.stage.on('pointermove', onDrag);
-                    }
-        
-                    // Stop dragging feedback once the handle is released.
-                    function onDragEnd() {
-                        app.stage.interactive = false;
-                        app.stage.off('pointermove', onDrag);
-                    }
-        
-                    // Update the handle's position & spaceship's scale when the handle is moved.
-                    function onDrag(e) {
-                        const halfHandleWidth = handle.width / 2;
-                        // Set handle x-position to match pointer, clamped to slider width.
-                        handle.x = Math.max(halfHandleWidth, Math.min(slider.toLocal(e.global).x, sliderWidth - halfHandleWidth));
-                        // Normalize handle position between -1 and 1.
-                        const t = 2 * (handle.x / sliderWidth - 0.5);
-        
-                        spaceship.scale.set(3 * (1.1 + t));
-                        spaceshipSound.volume = (1.1 + t) / 2.2;  // Volume range between 0 and 1
-                    }
-        
-                    window.togglePopup = function () {
-                        const popup = document.getElementById('spaceshipPopup');
-                        popup.classList.toggle('show');
-                    }
-        
-                })();
-            </script>
-        </div>
-        
 
-        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+ <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const visionElement = document.getElementById('vision');
@@ -233,3 +122,4 @@
         </footer>
     </body>
     </html>
+

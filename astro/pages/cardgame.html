@@ -16,23 +16,19 @@
                 <h3>Astro<span style="color: #6200ea;">Vision</span></h3>
                 <nav>
                     <ul>
-                        <li><a href="#home">Home</a></li>
+                        <li><a href="home.html">Home</a></li>
                         <li><a href="solar.html">Solar System</a></li>
-                        <li><a href="cardgame.html">Zodiac</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="">Zodiac</a></li>
+                        <li><a href="quiz.html">Astro Quiz</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
                     </ul>
                 </nav>
             </div>
-            <div class="auth-buttons">
-                <button onclick="togglePopup()">
-                    <i class="bi bi-volume-up"></i>
-                </button>
-                <button onclick="toggleSound()" id="soundIcon">
-                    <i class="bi bi-bell"></i>
-                </button>
-            </div>
         </div>
     </header>
+    <div id="iframe-container">
+        <iframe id="audio-iframe" src="audio-player.html" frameborder="0" style="display: none;"></iframe>
+    </div>
     <style>
         body {
             background-color: #05090e;
