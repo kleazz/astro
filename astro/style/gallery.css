@@ -1,3 +1,12 @@
+body {
+    background-color: #05090e;
+    color: black;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+
 .gallery {
     display: flex;
     flex-direction: column;
@@ -5,17 +14,44 @@
 }
 
 .row {
+    padding-top: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
     display: flex;
     gap: 20px;
 }
 
 .gallery-item {
+    display: flex;
+    justify-content: center; /* Center the video horizontally */
+    align-items: center; /* Center the video vertically */
+    flex-direction: column; /* Align items vertically */
     flex: 1;
     max-width: calc(50% - 10px); /* Two items per row */
+    width: 100%; /* Ensures the item takes full width of its container */
+    height: 500px; /* Set a fixed height for the gallery items */
+    overflow: hidden; /* Hide overflow content to prevent distortion */
+    position: relative; /* Position elements inside relative to this container */
+    background-position: center; /* Center the background image */
+    background-size: cover;
+    /* background-size: auto 100%;  */
+    /* transition: background-size 0.3s ease; */
 }
 
 .description {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     text-align: center;
+    position: absolute; /* Position the description relative to its parent */
+    bottom: 0; /* Align the description to the bottom of the gallery item */
+    left: 0; /* Align the description to the left of the gallery item */
+    width: 100%; /* Make the description full width of its parent */
+    box-sizing: border-box; /* Include padding and border in the width */
 }
+/* .zoom-in {
+    background-size: auto 110%; /* Increase background size to zoom in */
+/* } */ 
+
+/* .zoom-out {
+    background-size: auto 100%; /* Reset background size to zoom out */
+/* } */ 
