@@ -5,9 +5,11 @@ body {
     overflow-x: hidden;
   }
   
+  p {
+    white-space: pre-line;
+  }
   .solar-system-container {
     font-size: 7px;
-    height: 50cm;
     width: auto;
     position: relative; 
     overflow: hidden;
@@ -22,7 +24,7 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 23.5%;
+    top: 14%;
     left: 50%;
     width: 10em;
     height: 10em;
@@ -354,12 +356,12 @@ body {
     animation: appearAnimationBottomRight 1s forwards;
   }
   .slider-container {
-    margin-top: 620px;
+    margin-top: 650px;
 
 }
 
 .slider {
-    background-color: #e9e8e4;
+  background-color: rgba(255, 255, 255, 0.8);
     width: 90%;
     margin-left: 5%;
     height: 350px; 
@@ -393,7 +395,7 @@ body {
     margin-bottom: 20px;
 }
 
-.slide p {
+.slide .paragrafi {
     font-size: 16px;
 }
 
@@ -430,4 +432,9 @@ body {
 
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
+}
+
+.slide img {
+  width: 266px;
+  height: 266px; 
 }
