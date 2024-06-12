@@ -8,7 +8,7 @@
   header {
     background: #05090e;
     color: #fff;
-    padding: 1rem 0; /* Reduced padding for a thinner header */
+    padding: 2rem 0; /* Reduced padding for a thinner header */
   }
   
   header h3 {
