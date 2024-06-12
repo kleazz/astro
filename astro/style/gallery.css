@@ -1,0 +1,21 @@
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.gallery-item {
+    flex: 1;
+    max-width: calc(50% - 10px); /* Two items per row */
+}
+
+.description {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    text-align: center;
+}
