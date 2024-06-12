@@ -58,7 +58,24 @@
                         <div class="preloader"></div>
                     </div>
             </div>
+            <h1>Latest News</h1>
 
+    <div class="news-container">
+        <div class="news-item">
+            <h2>June 10, 2024</h2>
+            <p>NASA's Hubble Finds Surprises Around a Star That Erupted 40 Years Ago</p>
+        </div>
+
+        <div class="news-item">
+            <h2>June 11, 2024</h2>
+            <p>New Study Reveals Impact of Climate Change on Global Biodiversity</p>
+        </div>
+
+        <div class="news-item">
+            <h2>June 12, 2024</h2>
+            <p>SpaceX Successfully Launches New Satellite into Orbit</p>
+        </div>
+    </div>
  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -98,6 +115,9 @@
                 const audio = new Audio('../sources/audio/roughclick.wav');
                 if (!document.getElementById('soundIcon').querySelector('i').classList.contains('bi-bell-slash')) {
                     audio.play();
+                    setTimeout(() => {
+                        window.location.href = 'solar.html';
+                    }, 400); 
                 }
             };
             });
