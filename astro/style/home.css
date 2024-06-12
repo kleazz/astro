@@ -88,29 +88,28 @@ body {
 }
 
 .row {
-  padding-top: 50px;
-  padding-left: 80px;
-  padding-right: 80px;
   display: flex;
-  gap: 20px;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: s;
+  margin-top: 20px;
+}
+.gallery-item {
+  width: 410px;
+  height: 410px;
+  margin: 10px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.gallery-item {
-  display: flex;
-  justify-content: center; /* Center the video horizontally */
-  align-items: center; /* Center the video vertically */
-  flex-direction: column; /* Align items vertically */
-  flex: 1;
-  max-width: calc(50% - 10px); /* Two items per row */
-  width: 100%; /* Ensures the item takes full width of its container */
-  height: 500px; /* Set a fixed height for the gallery items */
-  overflow: hidden; /* Hide overflow content to prevent distortion */
-  position: relative; /* Position elements inside relative to this container */
-  background-position: center; /* Center the background image */
-  background-size: cover;
-  /* background-size: auto 100%;  */
-  /* transition: background-size 0.3s ease; */
+.gallery-item:hover {
+  transform: scale(1.1);
 }
+
 h1 {
   color: white;
 }
